@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { register } from "../../lib/api";
+import { useAuth } from "../../lib/AuthContext";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const { setToken } = useAuth();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     try {
       const data = await register(email, password);
       localStorage.setItem("token", data.access_token);
+      setToken(data.access_token);
       router.push("/");
     } catch (err) {
       setError((err as Error).message);
