@@ -13,6 +13,7 @@ from backend.models.farmer import FarmerProfile
 from backend.settings import settings
 from backend.cache import get_cached_et0, set_cached_et0
 from backend.ml.agent import QLearningAgent
+from backend.schemas import PhoneStr, RatingStr
 
 # ----------------------------
 # RL agent global instance
@@ -44,7 +45,7 @@ class ScheduleRequest(BaseModel):
         Longitude (deg).
     """
 
-    phone: str | None = Field(None, description="Farmer phone number (E.164)")
+    phone: PhoneStr | None = None
     crop: str = Field(..., examples=["maize", "wheat"])
     area_m2: PositiveFloat
     lat: float
@@ -194,8 +195,8 @@ async def compute_schedule(req: ScheduleRequest) -> ScheduleResponse:
 
 
 class FeedbackRequest(BaseModel):
-    phone: str = Field(..., description="Farmer phone number (E.164)")
-    rating: str = Field(..., description="dry|ok|wet", examples=["ok"])
+    phone: PhoneStr
+    rating: RatingStr
 
 
 @app.post(

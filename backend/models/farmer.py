@@ -1,9 +1,11 @@
 """Pydantic model for farmer profiles."""
 from pydantic import BaseModel, Field, PositiveFloat
 
+from backend.schemas import PhoneStr
+
 
 class FarmerProfile(BaseModel):
-    phone: str = Field(..., regex=r"^\+?[0-9]{7,15}$", description="E.164 phone number")
+    phone: PhoneStr
     crop: str
     area_m2: PositiveFloat
     lat: float
