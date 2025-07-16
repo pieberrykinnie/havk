@@ -9,6 +9,7 @@ from pydantic import BaseModel, Field, PositiveFloat
 # pylint: disable=wrong-import-position
 # Reordering import to avoid circular side effects
 from backend.ml.et import WeatherInputs, et0_fao56
+from backend.models.farmer import FarmerProfile
 from backend.settings import settings
 
 # ----------------------------
@@ -38,6 +39,83 @@ class ScheduleRequest(BaseModel):
 class ScheduleResponse(BaseModel):
     et0_mm: float  # mm/day
     advised_litres: float  # litres to apply over entire field
+
+
+# ----------------------------
+# In-memory farmer storage (fallback if Supabase not configured)
+# ----------------------------
+
+_farmers: dict[str, FarmerProfile] = {}
+
+
+# ----------------------------
+# Farmer endpoints
+# ----------------------------
+
+
+@app.post(
+    "/farmers",
+    response_model=FarmerProfile,
+    status_code=status.HTTP_201_CREATED,
+    summary="Create or update farmer profile",
+    tags=["farmers"],
+)
+async def upsert_farmer(profile: FarmerProfile) -> FarmerProfile:
+    """Persist farmer profile via Supabase REST or fallback in-memory store."""
+
+    try:
+        from supabase import create_client  # type: ignore
+
+        import os
+
+        url = os.getenv("SUPABASE_URL")
+        key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+
+        if url and key:
+            client = create_client(url, key)
+            client.table("farmers").upsert(profile.model_dump()).execute()
+        else:
+            raise ImportError("Supabase env not configured")
+    except Exception:  # pylint: disable=broad-except
+        # Fallback to in-memory dictionary for local dev / unit tests
+        _farmers[profile.phone] = profile
+
+    return profile
+
+
+@app.get(
+    "/farmers/{phone}",
+    response_model=FarmerProfile,
+    summary="Retrieve farmer profile",
+    tags=["farmers"],
+)
+async def get_farmer(phone: str) -> FarmerProfile:  # noqa: D401
+    """Return farmer profile from Supabase or memory, 404 if missing."""
+
+    profile: FarmerProfile | None = None
+
+    try:
+        from supabase import create_client  # type: ignore
+
+        import os
+
+        url = os.getenv("SUPABASE_URL")
+        key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+
+        if url and key:
+            client = create_client(url, key)
+            data, _ = client.table("farmers").select("*").eq("phone", phone).single().execute()
+            if data:
+                profile = FarmerProfile(**data)
+    except Exception:  # pylint: disable=broad-except
+        profile = _farmers.get(phone)
+
+    if profile is None:
+        from fastapi import HTTPException
+
+        raise HTTPException(status_code=404, detail="Farmer not found")
+
+    return profile
 
 
 # ----------------------------
