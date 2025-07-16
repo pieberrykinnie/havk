@@ -13,6 +13,7 @@ from backend.models.farmer import FarmerProfile
 from backend.settings import settings
 from backend.cache import get_cached_et0, set_cached_et0
 from backend.schemas import PhoneStr, RatingStr
+from typing import cast
 
 # ----------------------------
 # RL agent global instance
@@ -216,6 +217,34 @@ async def submit_feedback(req: FeedbackRequest) -> dict[str, str]:  # noqa: D401
     _agent.update("global", action, reward, "global")
 
     return {"status": "recorded"}
+
+
+@app.get(
+    "/stats/global",
+    summary="Global statistics",
+    tags=["stats"],
+)
+async def global_stats() -> dict[str, float | int]:  # noqa: D401
+    """Return aggregate metrics such as farmer count and total area."""
+
+    try:
+        from supabase import create_client  # type: ignore
+        import os
+
+        url = os.getenv("SUPABASE_URL")
+        key = os.getenv("SUPABASE_SERVICE_KEY") or os.getenv("SUPABASE_ANON_KEY")
+
+        if url and key:
+            client = create_client(url, key)
+            data, _ = client.table("farmers").select("area_m2").execute()
+            areas = [row["area_m2"] for row in cast(list[dict], data)] if data else []
+            return {"farmers": len(areas), "total_area_m2": sum(areas)}
+    except Exception:
+        pass
+
+    # Fallback to in-memory store
+    areas = [f.area_m2 for f in _farmers.values()]
+    return {"farmers": len(areas), "total_area_m2": sum(areas)}
 
 
 app = FastAPI(title="IrrigaBot API", version="0.1.0")

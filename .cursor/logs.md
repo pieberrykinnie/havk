@@ -36,3 +36,4 @@ Example:
 2025-07-16 – Commit 20: feat(dashboard): bootstrap React + Vite hello world, README instructions ✅
 2025-07-16 – Commit 21: feat(dashboard): add Supabase realtime farmer list listener ✅
 2025-07-16 – Commit 22: feat(dashboard): integrate Mapbox heatmap with realtime farmers ✅
+2025-07-16 – Commit 23: feat(api): add /stats/global endpoint, tests, README example ✅

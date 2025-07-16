@@ -27,24 +27,12 @@ curl -s -X POST http://localhost:8000/feedback \
   -d '{"phone":"+1555001","rating":"ok"}'
 ```
 
+### Stats example
+```bash
+curl -s http://localhost:8000/stats/global | jq
+```
+
 ## Twilio Webhook (Local Test)
 
 In the Twilio console set your messaging webhook to:
 ```
-https://<ngrok-url>/twilio
-```
-
-For local simulation inside Python:
-```python
-from twilio_functions.handler import handle_sms
-print(handle_sms({"Body": "join"}))
-```
-
-## Dashboard
-
-```bash
-cd dashboard
-pnpm install --frozen-lockfile
-pnpm dev
-```
-Visit http://localhost:5173 to view the React dashboard.
