@@ -40,3 +40,4 @@ Example:
 2025-07-16 – Commit 24: test(e2e): add Makefile with demo, seeding, and chat simulation ✅
 2025-07-16 – Commit 25: feat(access): add IVR/voice support to Twilio handler, TTS, and tests ✅
 2025-07-16 – Commit 26: feat(gamify): add leaderboard to stats, badge to Twilio, tests updated ✅
+2025-07-16 – Commit 27: docs(i18n): add translation workflow via Weblate ✅
