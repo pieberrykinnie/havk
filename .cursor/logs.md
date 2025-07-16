@@ -19,3 +19,4 @@ Example:
 2025-07-16 – Commit 3: feat(infra): add docker-compose with api, redis, supabase ✅
 2025-07-16 – Commit 4: test(api): add pytest config & smoke test ✅
 2025-07-16 – Commit 5: feat(api): scaffold FastAPI app with /health endpoint ✅
+2025-07-16 – Commit 6: feat(ml): add FAO-56 ET0 calculator & unit test ✅
