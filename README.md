@@ -19,3 +19,16 @@ curl -s -X POST http://localhost:8000/schedule \
   -H "Content-Type: application/json" \
   -d '{"crop":"maize","area_m2":1000,"lat":0,"lon":0}' | jq
 ```
+
+## Twilio Webhook (Local Test)
+
+In the Twilio console set your messaging webhook to:
+```
+https://<ngrok-url>/twilio
+```
+
+For local simulation inside Python:
+```python
+from twilio_functions.handler import handle_sms
+print(handle_sms({"Body": "join"}))
+```
