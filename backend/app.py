@@ -8,11 +8,10 @@ from pydantic import BaseModel, Field, PositiveFloat
 
 # pylint: disable=wrong-import-position
 # Reordering import to avoid circular side effects
-from backend.ml.et import WeatherInputs, et0_fao56
+from backend.ml import WeatherInputs, et0_fao56, QLearningAgent
 from backend.models.farmer import FarmerProfile
 from backend.settings import settings
 from backend.cache import get_cached_et0, set_cached_et0
-from backend.ml.agent import QLearningAgent
 from backend.schemas import PhoneStr, RatingStr
 
 # ----------------------------

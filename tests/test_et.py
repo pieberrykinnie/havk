@@ -1,4 +1,4 @@
-from backend.ml.et import WeatherInputs, et0_fao56
+from backend.ml import WeatherInputs, et0_fao56
 
 
 def test_et0_sample_case():

@@ -1,4 +1,4 @@
-from backend.ml.agent import QLearningAgent
+from backend.ml import QLearningAgent
 
 
 def test_q_learning_converges():
