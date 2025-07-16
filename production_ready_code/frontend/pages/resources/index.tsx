@@ -56,6 +56,7 @@ export default function ResourcesPage() {
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <form onSubmit={handleCreate} className="flex gap-2 mb-4 flex-wrap">
         <input
+          aria-label="Resource name"
           className="border p-2 flex-1"
           placeholder="Name"
           value={name}
@@ -63,12 +64,14 @@ export default function ResourcesPage() {
           required
         />
         <input
+          aria-label="Resource description"
           className="border p-2 flex-1"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
         <input
+          aria-label="Resource category"
           className="border p-2 flex-1"
           placeholder="Category"
           value={category}

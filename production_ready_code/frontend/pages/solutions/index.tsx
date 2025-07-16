@@ -63,6 +63,7 @@ export default function SolutionsPage() {
       {error && <p className="text-red-500 mb-2">{error}</p>}
       <form onSubmit={handleCreate} className="flex gap-2 mb-4 flex-wrap">
         <input
+          aria-label="Solution title"
           className="border p-2 flex-1"
           placeholder="Title"
           value={title}
@@ -70,12 +71,14 @@ export default function SolutionsPage() {
           required
         />
         <input
+          aria-label="Solution description"
           className="border p-2 flex-1"
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
         <select
+          aria-label="Related resource"
           className="border p-2 flex-1"
           value={resourceId}
           onChange={(e) => setResourceId(e.target.value === "" ? "" : Number(e.target.value))}

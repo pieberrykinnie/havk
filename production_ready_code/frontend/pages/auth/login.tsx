@@ -28,6 +28,7 @@ export default function LoginPage() {
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-80">
         <input
+          aria-label="Email address"
           type="email"
           placeholder="Email"
           value={email}
@@ -36,6 +37,7 @@ export default function LoginPage() {
           required
         />
         <input
+          aria-label="Password"
           type="password"
           placeholder="Password"
           value={password}
