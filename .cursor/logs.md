@@ -22,3 +22,4 @@ Example:
 2025-07-16 – Commit 6: feat(ml): add FAO-56 ET0 calculator & unit test ✅
 2025-07-16 – Commit 7: feat(api): add /schedule endpoint with ET0 calc & tests ✅
 2025-07-16 – Commit 8: test(ci): enforce 80% coverage threshold in pytest step ✅
+2025-07-16 – Commit 9: refactor(config): centralise constants in settings.py env-driven ✅

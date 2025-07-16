@@ -6,7 +6,10 @@ from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field, PositiveFloat
 
+# pylint: disable=wrong-import-position
+# Reordering import to avoid circular side effects
 from backend.ml.et import WeatherInputs, et0_fao56
+from backend.settings import settings
 
 # ----------------------------
 # Request / Response Schemas
@@ -44,16 +47,16 @@ class ScheduleResponse(BaseModel):
 def _mock_weather_inputs() -> WeatherInputs:
     """Return deterministic weather used for baseline tests.
 
-    This stub will be replaced by real API integration later.
+    Values are loaded from :mod:`backend.settings` to allow env overrides.
     """
     return WeatherInputs(
-        t_mean=25.0,
-        net_radiation=18.0,
-        wind_speed_2m=2.0,
-        slope_vp_curve=0.07,
-        psychrometric_constant=0.066,
-        sat_vp=3.2,
-        actual_vp=1.2,
+        t_mean=settings.T_MEAN,
+        net_radiation=settings.NET_RADIATION,
+        wind_speed_2m=settings.WIND_SPEED_2M,
+        slope_vp_curve=settings.SLOPE_VP_CURVE,
+        psychrometric_constant=settings.PSYCHROMETRIC_CONSTANT,
+        sat_vp=settings.SAT_VP,
+        actual_vp=settings.ACTUAL_VP,
     )
 
 
@@ -70,7 +73,7 @@ async def compute_schedule(req: ScheduleRequest) -> ScheduleResponse:
     """
     weather = _mock_weather_inputs()
     et0 = et0_fao56(weather)
-    mm_depth = et0  # since Kc=1
+    mm_depth = et0 * settings.KC
     # 1 mm over 1 m^2 equals 1 litre water
     litres = round(mm_depth * req.area_m2, 2)
     return ScheduleResponse(et0_mm=et0, advised_litres=litres)
