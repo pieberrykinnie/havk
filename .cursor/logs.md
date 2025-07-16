@@ -35,3 +35,4 @@ Example:
 2025-07-16 – Commit 19: refactor(ml): add package __init__ and re-export models; updated imports/tests ✅
 2025-07-16 – Commit 20: feat(dashboard): bootstrap React + Vite hello world, README instructions ✅
 2025-07-16 – Commit 21: feat(dashboard): add Supabase realtime farmer list listener ✅
+2025-07-16 – Commit 22: feat(dashboard): integrate Mapbox heatmap with realtime farmers ✅

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { supabase } from './supabase';
+import { Map } from './Map';
 
 type Farmer = {
   phone: string;
   crop: string;
   area_m2: number;
+  lat: number;
+  lon: number;
 };
 
 export default function App() {
@@ -47,6 +50,23 @@ export default function App() {
           </li>
         ))}
       </ul>
+
+      <h2>Water Savings Heatmap</h2>
+      <Map
+        geojson={{
+          type: 'FeatureCollection',
+          features: farmers.map((f) => ({
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [f.lon ?? 0, f.lat ?? 0],
+            },
+            properties: {
+              weight: f.area_m2 / 1000, // crude weight proxy
+            },
+          })),
+        }}
+      />
     </main>
   );
 }
