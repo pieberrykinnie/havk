@@ -1,0 +1,78 @@
+# .cursorrules – Working Contract for IrrigaBot Prototype
+
+This file codifies **mandatory** practices for every development, documentation, and shell interaction during the HAVK hackathon. Violations must be corrected in the next commit.
+
+---
+
+## 1. Terminal Discipline
+1. **First command of any fresh shell or new `cd` path:**
+   ```bash
+   pwd && ls -alh && tree -L 2 | cat
+   ```
+   *Rationale:* gives context for subsequent commands; respects rule to use `| cat` to avoid pagers.*
+2. Use **non-interactive flags** (`--yes`, `--no-pager`, etc.) so CI and logs remain unattended.
+3. Background tasks must set `is_background: true` in tool calls.
+
+## 2. Package Management & Languages
+1. NodeJS ecosystem:
+   * Use **`pnpm`** exclusively (`pnpm init`, `pnpm add`, `pnpm dlx`).
+   * TypeScript default; **no vanilla JS** in production code (test stubs may use JS with `// @ts-check`).
+2. Python ecosystem:
+   * Use **UV** (`uv venv`, `uv pip install`) for dependency resolution.
+   * Strict `pyproject.toml` managed by UV; never commit auto-generated `requirements.txt`.
+   * Python codebase is typed (PEP-561 mypy passes at CI gate).
+3. No direct generation of monolithic files (`package.json`, `pyproject.toml`, etc.). Always **init** then incrementally add packages via CLI.
+
+## 3. Dependency Due Diligence
+1. **Before importing a previously unused library**, perform a `web_search` on:
+   * Official docs/examples
+   * Licence compatibility (MIT / Apache-2 only)
+   * Security advisories (CVE scan)
+2. Reference the search result link in commit message footer: `refs #docs-link`.
+
+## 4. Code Quality & Documentation
+1. **Comment extensively**: every non-trivial function/class/method has a docstring with:
+   * `Purpose:`
+   * `Args:` with types
+   * `Returns:` type
+   * `Raises:` exceptions
+2. Type safety is enforced:
+   * TypeScript `strict: true` in `tsconfig.json`.
+   * Python `mypy --strict` passes before merge.
+3. ESLint (`@typescript-eslint/recommended`) & Ruff for Python run in CI.
+4. Documentation lives in `docs/` and **must never exceed 10 files**. If adding a 10th+, merge/summarise.
+5. Root `README.md` is single source for quickstart & architecture; keep updated.
+
+## 5. Testing & Commits
+1. **Every commit** affecting runtime code:
+   * Adds/updates corresponding unit test _or_ E2E test.
+   * Runs `pnpm test` and `pytest` locally before push.
+2. Commit messages follow **Conventional Commits**; include scope.
+3. Breaking changes must start with `BREAKING CHANGE:` footer and include migration guide in docs.
+
+## 6. Environment & Secrets
+1. Store sensitive variables only in `.env.example` with placeholders; never create `.env` in repo.
+2. Provide clear setup steps in README / docs for human-in-the-loop secret creation (e.g., Twilio keys).
+3. Infrastructure secrets in CI must use repo secrets UI, referenced via `${{ secrets.X }}`.
+
+## 7. UX & Accessibility
+1. Front-end must achieve Lighthouse a11y ≥ 90.
+2. Colour palette passes WCAG AA contrast; include colour-blind safe checks.
+3. Provide keyboard navigation for dashboard components.
+
+## 8. Context Management & Logging
+1. After each logical task, **flush context** as per TODO.md reminder; summarise only necessary info to continue.
+2. Log progress in `.cursor/logs.md` respecting implementation plan. Condense older entries >20.
+
+## 9. External Assets & IP
+1. Use only open-licence fonts/icons (e.g., FontAwesome Free, Heroicons).
+2. Stock images under CC0/Unsplash; attribute in README.
+
+## 10. Miscellaneous
+1. Keep `docs/` diagrams in text formats (Mermaid, PlantUML) not binaries.
+2. Keep Docker images ephemeral; multi-stage builds, no creds baked in.
+3. Use Prettier/Black formatters; CI fails on diff.
+
+---
+
+**Remember:** Build small, test continuously, document thoroughly, commit intentionally.  These rules ensure a maintainable and judge-friendly prototype.
