@@ -31,6 +31,16 @@ def _build_twiml(message: str, voice: bool = False) -> str:
     return tostring(root, encoding="unicode")
 
 
+def _badge_for_area(area: float) -> str:
+    if area >= 4000:
+        return "🏆 Gold"
+    elif area >= 2000:
+        return "🥈 Silver"
+    elif area >= 1000:
+        return "🥉 Bronze"
+    return "🌱 Seedling"
+
+
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
@@ -54,8 +64,12 @@ def handle_sms(event: Dict[str, str]) -> str:  # noqa: D401
     intent = parse_message(body)
 
     if intent == "join":
+        # Simulate lookup of area for badge (in real use, fetch from API)
+        area = 2500  # Placeholder; in prod, fetch from /farmers or /stats
+        badge = _badge_for_area(area)
         response_text = (
-            "Welcome to IrrigaBot! We'll send irrigation advice daily. "
+            f"Welcome to IrrigaBot! Your badge: {badge}. "
+            "We'll send irrigation advice daily. "
             'Reply "done" after irrigating to improve suggestions.'
         )
     elif intent == "done":

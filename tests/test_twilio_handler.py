@@ -27,3 +27,7 @@ def test_voice_unknown_flow():
     xml = handle_sms({"Body": "foobar", "CallSid": "CA456"})
     assert "<Say" in xml
     assert "did not understand" in _msg_text(xml)
+
+def test_join_badge():
+    xml = handle_sms({"Body": "join"})
+    assert any(b in _msg_text(xml) for b in ["Gold", "Silver", "Bronze", "Seedling"])

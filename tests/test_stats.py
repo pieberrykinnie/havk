@@ -17,3 +17,7 @@ def test_global_stats():
     data = resp.json()
     assert data["farmers"] >= 2
     assert data["total_area_m2"] >= 300
+    assert "leaderboard" in data
+    assert any(
+        float(v) >= 100 for v in data["leaderboard"].values()
+    )

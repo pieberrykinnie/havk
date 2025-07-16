@@ -236,15 +236,34 @@ async def global_stats() -> dict[str, float | int]:  # noqa: D401
 
         if url and key:
             client = create_client(url, key)
-            data, _ = client.table("farmers").select("area_m2").execute()
+            data, _ = client.table("farmers").select("area_m2,lat,lon").execute()
             areas = [row["area_m2"] for row in cast(list[dict], data)] if data else []
-            return {"farmers": len(areas), "total_area_m2": sum(areas)}
+            # Leaderboard: group by (rounded lat, lon) as village
+            leaderboard = {}
+            for row in cast(list[dict], data):
+                village = f"{round(row['lat'],2)},{round(row['lon'],2)}"
+                leaderboard.setdefault(village, 0)
+                leaderboard[village] += row["area_m2"]
+            return {
+                "farmers": len(areas),
+                "total_area_m2": sum(areas),
+                "leaderboard": leaderboard,
+            }
     except Exception:
         pass
 
     # Fallback to in-memory store
     areas = [f.area_m2 for f in _farmers.values()]
-    return {"farmers": len(areas), "total_area_m2": sum(areas)}
+    leaderboard = {}
+    for f in _farmers.values():
+        village = f"{round(f.lat,2)},{round(f.lon,2)}"
+        leaderboard.setdefault(village, 0)
+        leaderboard[village] += f.area_m2
+    return {
+        "farmers": len(areas),
+        "total_area_m2": sum(areas),
+        "leaderboard": leaderboard,
+    }
 
 
 app = FastAPI(title="IrrigaBot API", version="0.1.0")

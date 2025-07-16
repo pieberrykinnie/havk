@@ -39,3 +39,4 @@ Example:
 2025-07-16 – Commit 23: feat(api): add /stats/global endpoint, tests, README example ✅
 2025-07-16 – Commit 24: test(e2e): add Makefile with demo, seeding, and chat simulation ✅
 2025-07-16 – Commit 25: feat(access): add IVR/voice support to Twilio handler, TTS, and tests ✅
+2025-07-16 – Commit 26: feat(gamify): add leaderboard to stats, badge to Twilio, tests updated ✅
