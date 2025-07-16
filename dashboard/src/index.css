@@ -1,3 +1,27 @@
+:root {
+  /* Color-blind safe palette */
+  --primary: #1f77b4;    /* Blue */
+  --secondary: #ff7f0e;  /* Orange */
+  --success: #2ca02c;    /* Green */
+  --warning: #d62728;    /* Red */
+  --text: #2c3e50;       /* Dark blue-gray */
+  --bg: #ffffff;         /* White */
+  --bg-alt: #f8f9fa;     /* Light gray */
+}
+
 body {
   margin: 0;
+  color: var(--text);
+  background: var(--bg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
+
+/* Ensure sufficient contrast for accessibility */
+h1, h2, h3 {
+  color: var(--text);
+}
+
+/* Color-blind safe status indicators */
+.status-ok { color: var(--success); }
+.status-warning { color: var(--warning); }
+.status-info { color: var(--primary); }

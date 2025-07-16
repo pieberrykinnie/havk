@@ -41,11 +41,11 @@ export default function App() {
   }, []);
 
   return (
-    <main style={{ fontFamily: 'sans-serif', padding: '2rem' }}>
+    <main style={{ padding: '2rem' }}>
       <h1>IrrigaBot: Farmers ({farmers.length})</h1>
       <ul>
         {farmers.map((f) => (
-          <li key={f.phone}>
+          <li key={f.phone} className="status-info">
             {f.phone}: {f.crop} — {f.area_m2} m²
           </li>
         ))}
