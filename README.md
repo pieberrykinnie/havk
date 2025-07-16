@@ -20,6 +20,13 @@ curl -s -X POST http://localhost:8000/schedule \
   -d '{"crop":"maize","area_m2":1000,"lat":0,"lon":0}' | jq
 ```
 
+### Submit feedback example
+```bash
+curl -s -X POST http://localhost:8000/feedback \
+  -H "Content-Type: application/json" \
+  -d '{"phone":"+1555001","rating":"ok"}'
+```
+
 ## Twilio Webhook (Local Test)
 
 In the Twilio console set your messaging webhook to:

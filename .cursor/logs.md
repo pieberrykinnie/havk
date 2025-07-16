@@ -30,3 +30,4 @@ Example:
 2025-07-16 – Commit 14: fix(nlu): add accent stripping & transliteration, new multilingual patterns & tests ✅
 2025-07-16 – Commit 15: feat(cache): add Redis-based ET₀ cache layer with tests & docs ✅
 2025-07-16 – Commit 16: feat(ml): add Q-learning agent, convergence test & RL doc ✅
+2025-07-16 – Commit 17: feat(api): add feedback endpoint and RL reward loop ✅
