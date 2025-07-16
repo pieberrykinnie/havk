@@ -25,3 +25,4 @@ Example:
 2025-07-16 – Commit 9: refactor(config): centralise constants in settings.py env-driven ✅
 2025-07-16 – Commit 10: feat(nlu): add YAML intent patterns & regex parser with tests ✅
 2025-07-16 – Commit 11: feat(twilio): add webhook handler, tests, README snippet ✅
+2025-07-16 – Commit 12: chore(infra): add ngrok service & start script ✅
