@@ -11,6 +11,7 @@ from pydantic import BaseModel, Field, PositiveFloat
 from backend.ml.et import WeatherInputs, et0_fao56
 from backend.models.farmer import FarmerProfile
 from backend.settings import settings
+from backend.cache import get_cached_et0, set_cached_et0
 
 # ----------------------------
 # Request / Response Schemas
@@ -149,8 +150,15 @@ async def compute_schedule(req: ScheduleRequest) -> ScheduleResponse:
 
     *Assumptions:* crop coefficient (Kc)=1, application efficiency 100%.
     """
-    weather = _mock_weather_inputs()
-    et0 = et0_fao56(weather)
+    # Attempt to reuse ET₀ from cache (24h TTL)
+    et0_cached = get_cached_et0(req.lat, req.lon)
+
+    if et0_cached is not None:
+        et0 = et0_cached
+    else:
+        weather = _mock_weather_inputs()
+        et0 = et0_fao56(weather)
+        set_cached_et0(req.lat, req.lon, et0)
     mm_depth = et0 * settings.KC
     # 1 mm over 1 m^2 equals 1 litre water
     litres = round(mm_depth * req.area_m2, 2)

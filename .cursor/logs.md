@@ -28,3 +28,4 @@ Example:
 2025-07-16 – Commit 12: chore(infra): add ngrok service & start script ✅
 2025-07-16 – Commit 13: feat(api): add farmer persist endpoints with Supabase fallback ✅
 2025-07-16 – Commit 14: fix(nlu): add accent stripping & transliteration, new multilingual patterns & tests ✅
+2025-07-16 – Commit 15: feat(cache): add Redis-based ET₀ cache layer with tests & docs ✅
