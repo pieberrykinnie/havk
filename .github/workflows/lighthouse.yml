@@ -1,0 +1,39 @@
+name: Lighthouse CI
+
+on:
+  push:
+    paths:
+      - 'dashboard/**'
+      - '.github/workflows/lighthouse.yml'
+  pull_request:
+    paths:
+      - 'dashboard/**'
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install deps
+        run: |
+          cd dashboard
+          pnpm install --frozen-lockfile || pnpm install
+      - name: Build dashboard
+        run: |
+          cd dashboard
+          pnpm build
+      - name: Serve dashboard
+        run: |
+          cd dashboard
+          pnpm dlx serve dist --listen 5173 &
+          sleep 5
+      - name: Run Lighthouse CI
+        run: |
+          pnpm dlx @lhci/cli autorun --collect.url=http://localhost:5173 --assert.preset=lighthouse:recommended --assert.assertions.accessibility-score=0.9
