@@ -1,8 +1,9 @@
-"""Twilio SMS Webhook Handler – IrrigaBot
+"""Twilio SMS & Voice Webhook Handler – IrrigaBot
 
-This lightweight function mirrors what would run in Twilio Functions or as a /twilio
-FastAPI route. It parses the incoming SMS body, detects intent via the NLU parser,
-and returns an XML **TwiML** response.
+Supports both SMS (text) and Voice (IVR) requests from Twilio.
+For SMS, returns <Message> TwiML with text.
+For Voice, returns <Say> TwiML for TTS (text-to-speech).
+Intent detection is shared for both channels.
 """
 from __future__ import annotations
 
@@ -16,15 +17,17 @@ from backend.nlu.parser import parse_message
 # Helpers
 # ---------------------------------------------------------------------------
 
-def _build_twiml(message: str) -> str:
-    """Return TwiML string with single `<Message>` node."""
-
+def _build_twiml(message: str, voice: bool = False) -> str:
+    """Return TwiML string with single <Message> or <Say> node."""
     root = Element("Response")
-    node = Element("Message")
-    node.text = message
+    if voice:
+        node = Element("Say")
+        node.text = message
+        node.set("voice", "Polly.Joanna")  # Use a clear TTS voice
+    else:
+        node = Element("Message")
+        node.text = message
     root.append(node)
-
-    # tostring returns `bytes` by default; decode to `str` for convenience
     return tostring(root, encoding="unicode")
 
 
@@ -33,13 +36,13 @@ def _build_twiml(message: str) -> str:
 # ---------------------------------------------------------------------------
 
 def handle_sms(event: Dict[str, str]) -> str:  # noqa: D401
-    """Handle Twilio webhook.
+    """Handle Twilio webhook (SMS or Voice).
 
     Parameters
     ----------
     event : dict
         Key-value map of request parameters (Twilio forwards form data). At
-        minimum must contain the `Body` key.
+        minimum must contain the `Body` key. If `CallSid` is present, treat as voice.
 
     Returns
     -------
@@ -47,6 +50,7 @@ def handle_sms(event: Dict[str, str]) -> str:  # noqa: D401
         TwiML XML string to send back to the requester.
     """
     body = event.get("Body", "")
+    is_voice = "CallSid" in event or event.get("ChannelToAddress") == "voice"
     intent = parse_message(body)
 
     if intent == "join":
@@ -55,12 +59,12 @@ def handle_sms(event: Dict[str, str]) -> str:  # noqa: D401
             'Reply "done" after irrigating to improve suggestions.'
         )
     elif intent == "done":
-        response_text = "Great! Your feedback has been recorded. 👍"
+        response_text = "Great! Your feedback has been recorded."
     elif intent == "leave":
         response_text = "You have been unsubscribed. Bye!"
     else:
         response_text = (
-            'Sorry, I did not understand. Type "join" to enrol or "leave" to quit.'
+            'Sorry, I did not understand. Say "join" to enrol or "leave" to quit.'
         )
 
-    return _build_twiml(response_text)
+    return _build_twiml(response_text, voice=is_voice)
