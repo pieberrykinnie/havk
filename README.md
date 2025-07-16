@@ -39,3 +39,12 @@ For local simulation inside Python:
 from twilio_functions.handler import handle_sms
 print(handle_sms({"Body": "join"}))
 ```
+
+## Dashboard
+
+```bash
+cd dashboard
+pnpm install --frozen-lockfile
+pnpm dev
+```
+Visit http://localhost:5173 to view the React dashboard.

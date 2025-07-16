@@ -33,3 +33,4 @@ Example:
 2025-07-16 – Commit 17: feat(api): add feedback endpoint and RL reward loop ✅
 2025-07-16 – Commit 18: chore(api): centralise validation types (PhoneStr, RatingStr) and refactor schemas ✅
 2025-07-16 – Commit 19: refactor(ml): add package __init__ and re-export models; updated imports/tests ✅
+2025-07-16 – Commit 20: feat(dashboard): bootstrap React + Vite hello world, README instructions ✅
