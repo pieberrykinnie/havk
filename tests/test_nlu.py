@@ -17,3 +17,11 @@ def test_done_intent():
 
 def test_unknown_intent():
     assert parse_message("foo bar baz") == "unknown"
+
+
+def test_spanish_join_intent():
+    assert parse_message("¡Únete ahora!") == "join"
+
+
+def test_hindi_done_intent():
+    assert parse_message("मैंने पूरा किया") == "done"

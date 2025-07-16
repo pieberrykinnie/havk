@@ -4,6 +4,10 @@ join:
   - "\\bjoin\\b"
   - "\\bstart\\b"
   - "\\bregister\\b"
+  - "\\bunete\\b"   # Spanish
+  - "\\biniciar\\b" # Spanish
+  - "\\bshamil\\b" # Hindi transliteration (शामिल)
+  - "\\bshuru\\b"  # Hindi transliteration (शुरू)
 
 leave:
   - "\\bleave\\b"
@@ -14,3 +18,7 @@ done:
   - "\\bdone\\b"
   - "\\bstop\\b"
   - "\\bcomplete\\b"
+  - "\\bhecho\\b"   # Spanish
+  - "\\bcompleto\\b" # Spanish
+  - "\\bkhatam\\b" # Hindi (ख़त्म)
+  - "\\bpoora\\b"  # Hindi (पूरा)

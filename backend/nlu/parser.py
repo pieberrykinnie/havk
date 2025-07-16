@@ -7,7 +7,10 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List
+
+import unicodedata
+from unidecode import unidecode
 
 import yaml
 
@@ -22,6 +25,19 @@ _PATTERNS: Dict[str, List[re.Pattern[str]]] = {
     for intent, pats in _RAW_PATTERNS.items()
 }
 
+def _normalise(text: str) -> str:
+    """Return lower-case ASCII representation with accents removed.
+
+    Uses `unidecode` for transliteration so that non-Latin scripts roughly map
+    to ASCII phonetics (e.g. Devanagari → Latin).  This improves regex match
+    consistency without changing the YAML patterns.
+    """
+    # First, Unicode NFC normalise to combine accents
+    text_norm = unicodedata.normalize("NFC", text)
+    # Transliterate to ASCII
+    text_ascii = unidecode(text_norm)
+    return text_ascii.lower()
+
 def parse_message(message: str) -> str:
     """Return the first intent whose regex matches the message.
 
@@ -35,8 +51,10 @@ def parse_message(message: str) -> str:
     str
         Intent name or "unknown" if none matched.
     """
+    msg_norm = _normalise(message)
+
     for intent, patterns in _PATTERNS.items():
-        if any(p.search(message) for p in patterns):
+        if any(p.search(msg_norm) for p in patterns):
             return intent
     return "unknown"
 

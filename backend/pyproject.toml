@@ -8,4 +8,5 @@ dependencies = [
     "pydantic-settings~=2.2",
     "PyYAML~=6.0",
     "supabase~=2.0",
+    "Unidecode~=1.3",
 ]

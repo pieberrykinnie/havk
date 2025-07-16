@@ -27,3 +27,4 @@ Example:
 2025-07-16 – Commit 11: feat(twilio): add webhook handler, tests, README snippet ✅
 2025-07-16 – Commit 12: chore(infra): add ngrok service & start script ✅
 2025-07-16 – Commit 13: feat(api): add farmer persist endpoints with Supabase fallback ✅
+2025-07-16 – Commit 14: fix(nlu): add accent stripping & transliteration, new multilingual patterns & tests ✅
