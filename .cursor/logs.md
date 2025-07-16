@@ -20,3 +20,4 @@ Example:
 2025-07-16 – Commit 4: test(api): add pytest config & smoke test ✅
 2025-07-16 – Commit 5: feat(api): scaffold FastAPI app with /health endpoint ✅
 2025-07-16 – Commit 6: feat(ml): add FAO-56 ET0 calculator & unit test ✅
+2025-07-16 – Commit 7: feat(api): add /schedule endpoint with ET0 calc & tests ✅

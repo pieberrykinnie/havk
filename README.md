@@ -12,3 +12,10 @@ With the dev containers running:
 curl -s http://localhost:8000/health | jq
 # { "status": "ok" }
 ```
+
+### Compute schedule example
+```bash
+curl -s -X POST http://localhost:8000/schedule \
+  -H "Content-Type: application/json" \
+  -d '{"crop":"maize","area_m2":1000,"lat":0,"lon":0}' | jq
+```
