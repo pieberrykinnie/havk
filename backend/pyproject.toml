@@ -6,4 +6,5 @@ dependencies = [
     "fastapi~=0.111",
     "uvicorn[standard]~=0.29",
     "pydantic-settings~=2.2",
+    "PyYAML~=6.0",
 ]

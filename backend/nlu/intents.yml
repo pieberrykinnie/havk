@@ -1,0 +1,16 @@
+# Intent patterns (simple regex list per intent)
+# Case-insensitive flags expected to be added by parser
+join:
+  - "\\bjoin\\b"
+  - "\\bstart\\b"
+  - "\\bregister\\b"
+
+leave:
+  - "\\bleave\\b"
+  - "\\bquit\\b"
+  - "\\bexit\\b"
+
+done:
+  - "\\bdone\\b"
+  - "\\bstop\\b"
+  - "\\bcomplete\\b"
