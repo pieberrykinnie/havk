@@ -8,3 +8,6 @@ pydantic<2
 python-jose[cryptography]
 passlib[bcrypt]
 python-multipart
+pytest
+pytest-asyncio
+httpx[http2]
