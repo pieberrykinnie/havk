@@ -1,0 +1,9 @@
+graph TD
+  A[User] -->|Web UI| B[Next.js Frontend]
+  B -->|API Calls| C[FastAPI Backend]
+  C -->|AI Inference| D[Real-time AI Animation Engine]
+  D -->|Results| B
+  C -->|DB Ops| E[(Database)]
+  B -->|Auth| F[OAuth Provider]
+  B -->|Metrics| G[Analytics Service]
+  D -->|Trending API| H[External Trending API]

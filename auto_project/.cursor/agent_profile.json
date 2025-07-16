@@ -1,0 +1,19 @@
+{
+  "hackathon": "HAVK: Hacking the Desert",
+  "theme": "Resource-Scarce Environments",
+  "stack": ["Next.js", "FastAPI"],
+  "wow_factor": "Real-time AI animation",
+  "judging_weights": {
+    "technical_depth": 0.25,
+    "creativity": 0.25,
+    "usability": 0.125,
+    "accessibility": 0.25,
+    "fun_factor": 0.125
+  },
+  "prizes": [
+    "1st Place: HAVK Certificate + Special Discord Role",
+    "2nd Place: HAVK Certificate",
+    "3rd Place: HAVK Certificate"
+  ],
+  "deadline": "2025-07-18T13:00:00-05:00"
+}
