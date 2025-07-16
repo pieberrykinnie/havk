@@ -14,4 +14,4 @@ Example:
 ---
 
 ## Current Session
-*(No entries yet)*
+2025-07-16 – Commit 1: chore(repo): initialise monorepo ✅
