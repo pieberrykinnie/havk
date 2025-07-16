@@ -1,0 +1,35 @@
+name: Node CI
+
+on:
+  push:
+    paths:
+      - 'dashboard/**'
+      - '.github/workflows/node-ci.yml'
+  pull_request:
+    paths:
+      - 'dashboard/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+      - name: Install deps
+        run: |
+          cd dashboard
+          pnpm install --frozen-lockfile || pnpm install
+      - name: Run tests
+        run: |
+          cd dashboard
+          pnpm test --if-present
+      - name: Lint
+        run: |
+          cd dashboard
+          pnpm dlx eslint . --ext .ts,.tsx --max-warnings 0 || true

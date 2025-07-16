@@ -1,0 +1,42 @@
+name: Python CI
+
+on:
+  push:
+    paths:
+      - 'backend/**'
+      - '.github/workflows/python-ci.yml'
+  pull_request:
+    paths:
+      - 'backend/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install uv & deps
+        run: |
+          pip install uv
+          uv venv
+          source .venv/bin/activate
+          uv pip install pytest pytest-cov ruff mypy
+      - name: Run tests
+        run: |
+          source .venv/bin/activate
+          pytest -q --cov=backend --cov-report=xml
+      - name: Lint
+        run: |
+          source .venv/bin/activate
+          ruff check backend
+      - name: Type check
+        run: |
+          source .venv/bin/activate
+          mypy --strict backend || true  # allow until types added
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-xml
+          path: coverage.xml

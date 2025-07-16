@@ -15,3 +15,4 @@ Example:
 
 ## Current Session
 2025-07-16 – Commit 1: chore(repo): initialise monorepo ✅
+2025-07-16 – Commit 2: chore(ci): add GitHub Actions workflows and badges ✅
