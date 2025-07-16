@@ -43,3 +43,8 @@ Example:
 2025-07-16 – Commit 27: docs(i18n): add translation workflow via Weblate ✅
 2025-07-16 – Commit 28: chore(frontend): add Lighthouse CI for a11y score, pnpm deps ✅
 2025-07-16 – Commit 29: fix(frontend): add color-blind safe CSS palette and classes ✅
+2025-07-16 – Commit 30: chore(repo): add quickstart target and README polish ✅
+2025-07-16 – Commit 31: test(load): add k6-style load test script for 500 rps ✅
+2025-07-16 – Commit 32: docs(video): add demo storyboard & script for presentation ✅
+2025-07-16 – Commit 33: docs(readme): finalize badges, license year, links ✅
+2025-07-16 – Commit 34: chore(release): tag v0.1 hackathon submission with changelog ✅

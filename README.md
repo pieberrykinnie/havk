@@ -1,38 +1,39 @@
 # IrrigaBot
 
-[![Python CI](https://github.com/youruser/irriga-bot/actions/workflows/python-ci.yml/badge.svg)](./.github/workflows/python-ci.yml) [![Node CI](https://github.com/youruser/irriga-bot/actions/workflows/node-ci.yml/badge.svg)](./.github/workflows/node-ci.yml)
+[![Python CI](https://github.com/youruser/irriga-bot/actions/workflows/python-ci.yml/badge.svg)](./.github/workflows/python-ci.yml) [![Node CI](https://github.com/youruser/irriga-bot/actions/workflows/node-ci.yml/badge.svg)](./.github/workflows/node-ci.yml) [![Lighthouse CI](https://github.com/youruser/irriga-bot/actions/workflows/lighthouse.yml/badge.svg)](./.github/workflows/lighthouse.yml)
 
-Early-stage monorepo for the **IrrigaBot** hackathon prototype (HAVK 2025).  Follow the [implementation plan](.cursor/implementation-plan.md) for progress.
+AI-powered irrigation advisor for smallholder farmers in water-scarce regions. Built for the HAVK 2025 hackathon.
 
-> Under construction – see docs folder soon.
+## Quickstart
 
-## Quick API test
-With the dev containers running:
 ```bash
-curl -s http://localhost:8000/health | jq
-# { "status": "ok" }
+make quickstart
 ```
 
-### Compute schedule example
-```bash
-curl -s -X POST http://localhost:8000/schedule \
-  -H "Content-Type: application/json" \
-  -d '{"crop":"maize","area_m2":1000,"lat":0,"lon":0}' | jq
-```
+This spins up the full stack:
+- Backend API (FastAPI)
+- Dashboard (React + Vite) 
+- Redis cache
+- Supabase database
 
-### Submit feedback example
-```bash
-curl -s -X POST http://localhost:8000/feedback \
-  -H "Content-Type: application/json" \
-  -d '{"phone":"+1555001","rating":"ok"}'
-```
+Then visit http://localhost:5173 for the dashboard.
 
-### Stats example
-```bash
-curl -s http://localhost:8000/stats/global | jq
-```
+## Features
 
-## Twilio Webhook (Local Test)
+- **SMS/WhatsApp Bot** - multilingual irrigation advice
+- **Voice IVR** - accessible to illiterate farmers  
+- **Real-time Dashboard** - live farmer monitoring
+- **RL Optimization** - learns from farmer feedback
+- **Multilingual** - Hindi, Spanish, English support
+- **Accessible** - color-blind safe, Lighthouse 90%+ a11y
 
-In the Twilio console set your messaging webhook to:
-```
+## Documentation
+
+- [Architecture](docs/architecture.md)
+- [API Reference](docs/api.md) 
+- [Demo Script](docs/demo-script.md)
+- [Performance](docs/perf.md)
+
+## License
+
+MIT © 2025 IrrigaBot Team
